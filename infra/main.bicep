@@ -9,7 +9,7 @@ resource rg
     location: location
 }
 
-Module webApp './webapp.bicep'= {
+module webApp './webapp.bicep'= {
     name: 'webAppDeployment'
     scope: rg
     params: {
