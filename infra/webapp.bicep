@@ -35,4 +35,4 @@ resource webApp 'Microsoft.Web/sites@2023-12-01' = {
 }
 
 // Output the default hostname (e.g., my-webapp.azurewebsites.net)
-output webAppUrl string = 'https://${webApp.defaultHostName}'
+output webAppUrl string = 'https://${webApp.properties.defaultHostName}'
