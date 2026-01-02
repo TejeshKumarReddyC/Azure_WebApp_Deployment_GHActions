@@ -1,15 +1,22 @@
-param location string = 'eastus'
-param rgName string = 'vm-rg'
+targetScope = 'subscription'
 
+param location string = 'eastus'
+param rgName string
+param adminUsername string
+@secure()
+param adminPassword string
+
+// Resource Group (subscription scope)
 resource rg 'Microsoft.Resources/resourceGroups@2022-09-01' = {
   name: rgName
   location: location
 }
 
+// VNet (scoped to RG)
 resource vnet 'Microsoft.Network/virtualNetworks@2023-05-01' = {
   name: 'vm-vnet'
+  scope: rg
   location: location
-  resourceGroup: rg.name
   properties: {
     addressSpace: {
       addressPrefixes: ['10.0.0.0/16']
@@ -25,10 +32,11 @@ resource vnet 'Microsoft.Network/virtualNetworks@2023-05-01' = {
   }
 }
 
+// NIC
 resource nic 'Microsoft.Network/networkInterfaces@2023-05-01' = {
   name: 'vm-nic'
+  scope: rg
   location: location
-  resourceGroup: rg.name
   properties: {
     ipConfigurations: [
       {
@@ -44,18 +52,19 @@ resource nic 'Microsoft.Network/networkInterfaces@2023-05-01' = {
   }
 }
 
+// VM
 resource vm 'Microsoft.Compute/virtualMachines@2023-03-01' = {
   name: 'demo-vm'
+  scope: rg
   location: location
-  resourceGroup: rg.name
   properties: {
     hardwareProfile: {
       vmSize: 'Standard_B1s'
     }
     osProfile: {
       computerName: 'demo-vm'
-      adminUsername: 'azureuser'
-      adminPassword: 'Password1234!' // demo only
+      adminUsername: adminUsername
+      adminPassword: adminPassword
     }
     storageProfile: {
       imageReference: {
@@ -78,10 +87,10 @@ resource vm 'Microsoft.Compute/virtualMachines@2023-03-01' = {
   }
 }
 
+// VM Extension (child resource)
 resource webInstall 'Microsoft.Compute/virtualMachines/extensions@2023-03-01' = {
-  name: 'demo-vm/customScript'
-  location: location
-  resourceGroup: rg.name
+  name: 'customScript'
+  parent: vm
   properties: {
     publisher: 'Microsoft.Azure.Extensions'
     type: 'CustomScript'
@@ -96,7 +105,4 @@ resource webInstall 'Microsoft.Compute/virtualMachines/extensions@2023-03-01' = 
       '''
     }
   }
-  dependsOn: [
-    vm
-  ]
 }
