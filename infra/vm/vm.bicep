@@ -44,7 +44,7 @@ resource vm 'Microsoft.Compute/virtualMachines@2023-03-01' = {
   location: location
   properties: {
     hardwareProfile: {
-      vmSize: 'Standard_B1s'
+      vmSize: 'Standard_DC1ds_v3'
     }
     osProfile: {
       computerName: 'demo-vm'
