@@ -53,10 +53,11 @@ resource vm 'Microsoft.Compute/virtualMachines@2023-03-01' = {
     }
     storageProfile: {
       imageReference: {
-        publisher: 'Canonical'
-        offer: '0001-com-ubuntu-server-jammy'
-        sku: '22_04-lts'
-        version: 'latest'
+          publisher: 'Canonical'
+          offer: '0001-com-ubuntu-server-jammy'
+          sku: '22_04-lts-gen2'
+          version: 'latest'
+    }
       }
       osDisk: {
         createOption: 'FromImage'
