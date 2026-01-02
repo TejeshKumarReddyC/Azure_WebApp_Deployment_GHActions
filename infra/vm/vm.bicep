@@ -44,7 +44,7 @@ resource vm 'Microsoft.Compute/virtualMachines@2023-03-01' = {
   location: location
   properties: {
     hardwareProfile: {
-      vmSize: 'Standard_DC1ds_v3'
+      vmSize: 'Standard_B1s'
     }
     osProfile: {
       computerName: 'demo-vm'
@@ -53,11 +53,10 @@ resource vm 'Microsoft.Compute/virtualMachines@2023-03-01' = {
     }
     storageProfile: {
       imageReference: {
-          publisher: 'Canonical'
-          offer: '0001-com-ubuntu-server-jammy'
-          sku: '22_04-lts-gen2'
-          version: 'latest'
-    }
+        publisher: 'Canonical'
+        offer: '0001-com-ubuntu-server-jammy'
+        sku: '22_04-lts'
+        version: 'latest'
       }
       osDisk: {
         createOption: 'FromImage'
@@ -73,7 +72,6 @@ resource vm 'Microsoft.Compute/virtualMachines@2023-03-01' = {
   }
 }
 
-// Install nginx
 resource webInstall 'Microsoft.Compute/virtualMachines/extensions@2023-03-01' = {
   name: 'customScript'
   parent: vm
