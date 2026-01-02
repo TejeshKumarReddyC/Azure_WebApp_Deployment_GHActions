@@ -10,3 +10,4 @@
 4. Azure Tenants, Subscriptions, Resource Groups
 5. Azure Virtual machines
 6. Azure resource deployments
+7. Azure vnet, ASGs
