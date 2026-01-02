@@ -1,11 +1,10 @@
-
 targetScope = 'subscription'
 
 @description('Resource group name to create or use')
-param rgName string = 'webapp-rg'
+param rgName string = 'webapp-rg1'
 
 @description('Azure region')
-param location string = 'eastus'
+param location string = 'uksouth'
 
 @description('Web app name (must be globally unique for *.azurewebsites.net)')
 param appName string
