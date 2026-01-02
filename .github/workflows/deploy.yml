@@ -21,4 +21,4 @@ jobs:
       
       - name: Deploy Subscription Bicep
         run: | 
-           az deployment sub create --location eastus --template-file infra/main.bicep --parameters appName=my-webapp-${{ github.run_number }}
+           az deployment sub create --location uksouth --template-file infra/main.bicep --parameters appName=my-webapp-${{ github.run_number }}
